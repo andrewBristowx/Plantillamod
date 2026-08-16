@@ -1,0 +1,56 @@
+name: Build VTuberCore foundation
+
+on:
+  push:
+    branches:
+      - 'foundation/**'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '21'
+
+      - uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '9.6.1'
+
+      - name: Compile and test
+        run: gradle clean build --no-daemon --stacktrace
+
+      - name: Verify neutral foundation
+        shell: bash
+        run: |
+          set -euxo pipefail
+          jar='build/libs/vtubercore-0.1.0-alpha.1.jar'
+          test -f "$jar"
+          unzip -p "$jar" fabric.mod.json | grep -q '"id": "vtubercore"'
+          unzip -p "$jar" fabric.mod.json | grep -q '0.1.0-alpha.1'
+          test -f src/main/java/com/vtubercore/config/BrandingConfig.java
+          test -f src/main/java/com/vtubercore/config/ModulesConfig.java
+          ! grep -R -E 'Michicoins|Gasha Especial de Emi|Profesora Emi' src/main/java src/main/resources
+          sha256sum "$jar" > SHA256SUMS.txt
+          cat SHA256SUMS.txt
+
+      - name: Package source
+        shell: bash
+        run: |
+          git archive --format=zip --output=VTuberCore-0.1.0-alpha.1-source.zip HEAD
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: VTuberCore-0.1.0-alpha.1-foundation
+          path: |
+            build/libs/vtubercore-0.1.0-alpha.1.jar
+            build/libs/vtubercore-0.1.0-alpha.1-sources.jar
+            VTuberCore-0.1.0-alpha.1-source.zip
+            SHA256SUMS.txt
