@@ -2,6 +2,7 @@ package com.vtubercore.config;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.vtubercore.data.PlayerDataStore;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
@@ -15,9 +16,13 @@ public final class CoreConfigManager {
     private static final Path ROOT = FabricLoader.getInstance().getConfigDir().resolve("vtubercore");
     private static final Path BRANDING = ROOT.resolve("branding.json");
     private static final Path MODULES = ROOT.resolve("modules.json");
+    private static final Path DAILY_LOGIN = ROOT.resolve("daily_login.json");
+    private static final Path GUI_THEME = ROOT.resolve("gui_theme.json");
 
     private static BrandingConfig branding = new BrandingConfig();
     private static ModulesConfig modules = new ModulesConfig();
+    private static DailyLoginConfig dailyLogin = new DailyLoginConfig();
+    private static GuiThemeConfig guiTheme = new GuiThemeConfig();
 
     private CoreConfigManager() {
     }
@@ -28,8 +33,16 @@ public final class CoreConfigManager {
             branding = readOrCreate(BRANDING, BrandingConfig.class, new BrandingConfig());
             branding.sanitize();
             modules = readOrCreate(MODULES, ModulesConfig.class, new ModulesConfig());
+            modules.sanitize();
+            dailyLogin = readOrCreate(DAILY_LOGIN, DailyLoginConfig.class, new DailyLoginConfig());
+            dailyLogin.sanitize();
+            guiTheme = readOrCreate(GUI_THEME, GuiThemeConfig.class, new GuiThemeConfig());
+            guiTheme.sanitize();
             write(BRANDING, branding);
             write(MODULES, modules);
+            write(DAILY_LOGIN, dailyLogin);
+            write(GUI_THEME, guiTheme);
+            PlayerDataStore.clearCache();
         } catch (IOException e) {
             throw new IllegalStateException("No se pudo cargar config/vtubercore", e);
         }
@@ -41,6 +54,14 @@ public final class CoreConfigManager {
 
     public static ModulesConfig modules() {
         return modules;
+    }
+
+    public static DailyLoginConfig dailyLogin() {
+        return dailyLogin;
+    }
+
+    public static GuiThemeConfig guiTheme() {
+        return guiTheme;
     }
 
     private static <T> T readOrCreate(Path path, Class<T> type, T defaults) throws IOException {
