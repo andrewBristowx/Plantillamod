@@ -1,11 +1,14 @@
 package com.vtubercore.config;
 
-/**
- * Interruptores de módulos. En la fase foundation permanecen desactivados hasta
- * que cada sistema haya sido migrado y validado desde su proyecto original.
- */
+/** Interruptores de módulos del único JAR. */
 public final class ModulesConfig {
-    public boolean economy = false;
+    public boolean economy = true;
+    public boolean dailyLogin = true;
+    public boolean guiTemplates = true;
+    public boolean jobs = false;
+    public boolean shop = false;
+    public boolean kits = false;
+    public boolean battlePass = false;
     public boolean gacha = false;
     public boolean customPokemon = false;
     public boolean npcs = false;
@@ -19,4 +22,12 @@ public final class ModulesConfig {
     public boolean entityCleaner = false;
     public boolean specialSpawnAlerts = false;
     public boolean campaignEngine = false;
+
+    public void sanitize() {
+        if (!economy) {
+            dailyLogin = false;
+            shop = false;
+            casino = false;
+        }
+    }
 }

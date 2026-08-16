@@ -1,0 +1,20 @@
+{
+  "projectName": "Servidor de Ejemplo",
+  "creatorName": "Nueva VTuber",
+  "mascotName": "Mascota",
+  "currencyName": "StarCoins",
+  "currencySymbol": "✦",
+  "primaryColor": "#C06CFF",
+  "secondaryColor": "#FFFFFF",
+  "accentColor": "#FFD7F4",
+  "chatPrefix": "[Ejemplo]",
+  "specialGachaName": "Gasha Especial",
+  "themeId": "nueva_vtuber",
+  "modules": {"economy": true, "dailyLogin": true, "guiTemplates": true},
+  "visuals": {
+    "dailyLoginBackground": "input/daily_login_background.png",
+    "character": "input/character.png",
+    "logo": "input/logo.png",
+    "mascot": "input/mascot.png"
+  }
+}
