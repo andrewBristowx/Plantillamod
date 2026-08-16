@@ -64,7 +64,7 @@ public final class VTuberCore implements ModInitializer {
                                                 DailyLoginService.reset(target);
                                                 context.getSource().sendFeedback(() -> Text.literal("§aDaily reset para " + target.getName().getString()), true);
                                                 return 1;
-                                            }))));
+                                            })))));
 
             dispatcher.register(CommandManager.literal("balance").executes(context -> balance(context.getSource())));
             dispatcher.register(CommandManager.literal("daily")
