@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "vtubercore",
+  "version": "${version}",
+  "name": "VTuber Cobblemon Core",
+  "description": "Core modular reutilizable para servidores Cobblemon personalizados de VTubers y comunidades.",
+  "authors": [
+    "andrewBristowx"
+  ],
+  "contact": {
+    "sources": "https://github.com/andrewBristowx/Plantillamod"
+  },
+  "license": "All-Rights-Reserved",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.vtubercore.VTuberCore"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "fabric-api": "*",
+    "cobblemon": "*",
+    "geckolib": "*"
+  },
+  "suggests": {
+    "luckperms": "*",
+    "flan": "*",
+    "rctmod": "*"
+  }
+}
